@@ -4,7 +4,8 @@ console.log('App.js is running');
 
 var app = {
   title: 'Application Title',
-  subTitle: 'This is our application subtitle'
+  subTitle: 'This is our application subtitle',
+  options: ['One', 'Two']
 };
 
 var template = React.createElement(
@@ -15,24 +16,32 @@ var template = React.createElement(
     null,
     app.title
   ),
-  React.createElement(
+  app.subTitle && React.createElement(
     'p',
     null,
     app.subTitle
+  ),
+  React.createElement(
+    'p',
+    null,
+    app.options.length > 0 ? 'Here are your options' : 'No options'
   )
 );
 
 var user = {
   name: 'Mike',
   age: 33,
-  location: 'Massachusetts'
+  location: 'Worcester'
 };
 
 function getLocation(location) {
   if (location) {
-    return location;
-  } else {
-    return 'Unknown Location';
+    return React.createElement(
+      'p',
+      null,
+      'Location: ',
+      location
+    );
   }
 }
 
@@ -42,22 +51,17 @@ var templateTwo = React.createElement(
   React.createElement(
     'h1',
     null,
-    user.name
+    user.name ? user.name : 'Anonymous'
   ),
-  React.createElement(
+  user.age && user.age >= 18 && React.createElement(
     'p',
     null,
     'Age: ',
     user.age
   ),
-  React.createElement(
-    'p',
-    null,
-    'Location: ',
-    getLocation(user.location)
-  )
+  getLocation(user.location)
 );
 
 var appRoot = document.getElementById('app');
 
-ReactDOM.render(templateTwo, appRoot);
+ReactDOM.render(template, appRoot);
